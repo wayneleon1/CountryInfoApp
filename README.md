@@ -1,50 +1,65 @@
-# Welcome to your Expo app 👋
+# Country Explorer App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native mobile application that allows users to explore countries and their details, with support for both light and dark themes.
 
-## Get started
+## Features
 
-1. Install dependencies
+- View a list of all countries
+- Search countries by name
+- View detailed information about each country
+- Toggle between light and dark themes
+- Responsive design for various screen sizes
 
-   ```bash
-   npm install
-   ```
+## Prerequisites
 
-2. Start the app
+- Node.js (v14 or later)
+- npm or yarn
+- Expo CLI
+- iOS Simulator (for Mac users) or Android Studio (for Android development)
 
-   ```bash
-    npx expo start
-   ```
+## Installation
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
+1. Clone the repository:
 ```bash
-npm run reset-project
+git clone <https://github.com/wayneleon1/CountryInfoApp.git>
+cd COUNTRYINFOAPP
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Install dependencies:
+```bash
+npm install
+```
 
-## Learn more
+3. Install required packages:
+```bash
+npm install @react-navigation/native @react-navigation/native-stack
+npm install nativewind
+npm install --dev tailwindcss@3.3.2
+npm install react-native-heroicons
+npm install react-native-safe-area-context
+npm install react-native-screens
+```
+## Running the App
 
-To learn more about developing your project with Expo, look at the following resources:
+1. Start the development server:
+```bash
+npx expo start
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+2. Use the Expo Go app on your device or run on a simulator:
+- Press `i` for iOS simulator
+- Press `a` for Android simulator
+- Scan QR code with Expo Go app on your device
 
-## Join the community
+## Dependencies
 
-Join our community of developers creating universal apps.
+- React Native
+- Expo
+- React Navigation
+- NativeWind (TailwindCSS for React Native)
+- React Native Heroicons
+- React Native Safe Area Context
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## API
+
+The app uses the REST Countries API (https://restcountries.com/v3.1/all) to fetch country data.
