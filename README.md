@@ -1,4 +1,4 @@
-# Country Explorer App
+# Country Info App
 
 A React Native mobile application that allows users to explore countries and their details, with support for both light and dark themes.
 
@@ -21,13 +21,15 @@ A React Native mobile application that allows users to explore countries and the
 
 1. Clone the repository:
 ```bash
-git clone <https://github.com/wayneleon1/CountryInfoApp.git>
+git clone https://github.com/wayneleon1/CountryInfoApp.git
 cd COUNTRYINFOAPP
 ```
 
 2. Install dependencies:
 ```bash
 npm install
+# or
+yarn install
 ```
 
 3. Install required packages:
@@ -39,6 +41,35 @@ npm install react-native-heroicons
 npm install react-native-safe-area-context
 npm install react-native-screens
 ```
+
+4. Configure Tailwind CSS:
+Create a `tailwind.config.js` file in your project root:
+
+```javascript
+module.exports = {
+  content: [
+    "./App.{js,jsx,ts,tsx}",
+    "./screens/**/*.{js,jsx,ts,tsx}",
+    "./components/**/*.{js,jsx,ts,tsx}"
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+5. Update your `babel.config.js`:
+```javascript
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: ['babel-preset-expo'],
+    plugins: ["nativewind/babel"],
+  };
+};
+```
+
 ## Running the App
 
 1. Start the development server:
@@ -63,3 +94,15 @@ npx expo start
 ## API
 
 The app uses the REST Countries API (https://restcountries.com/v3.1/all) to fetch country data.
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License.
