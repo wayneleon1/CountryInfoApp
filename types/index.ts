@@ -29,3 +29,8 @@ export interface Country {
       side: string;
     };
   }
+
+  export interface GroupedCountries {
+    title: string;
+    data: Country[];
+  }

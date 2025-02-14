@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, FlatList, TouchableOpacity, Image, ListRenderItem } from 'react-native';
+import { View, Text, TextInput, SectionList, TouchableOpacity, Image } from 'react-native';
 import { useColorScheme } from 'nativewind';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MoonIcon, SunIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { useRouter } from 'expo-router';
-import { Country } from '../types';
+import { Country, GroupedCountries } from '../types';
 
 export default function Home() {
-  const [countries, setCountries] = useState<Country[]>([]);
+  const [countries, setCountries] = useState<GroupedCountries[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const { colorScheme, toggleColorScheme } = useColorScheme();
   const isDark = colorScheme === 'dark';
@@ -21,19 +21,56 @@ export default function Home() {
     try {
       const response = await fetch('https://restcountries.com/v3.1/all');
       const data: Country[] = await response.json();
-      setCountries(data.sort((a, b) => a.name.common.localeCompare(b.name.common)));
+      const sortedCountries = data.sort((a, b) => 
+        a.name.common.localeCompare(b.name.common)
+      );
+      const grouped = groupCountriesByLetter(sortedCountries);
+      setCountries(grouped);
     } catch (error) {
       console.error('Error fetching countries:', error);
     }
   };
 
-  const filteredCountries = countries.filter(country =>
-    country.name.common.toLowerCase().includes(searchQuery.toLowerCase())
+  const groupCountriesByLetter = (countries: Country[]): GroupedCountries[] => {
+    const grouped = countries.reduce((acc: { [key: string]: Country[] }, country) => {
+      const firstLetter = country.name.common.charAt(0).toUpperCase();
+      if (!acc[firstLetter]) {
+        acc[firstLetter] = [];
+      }
+      acc[firstLetter].push(country);
+      return acc;
+    }, {});
+
+    return Object.entries(grouped)
+      .map(([letter, countries]) => ({
+        title: letter,
+        data: countries,
+      }))
+      .sort((a, b) => a.title.localeCompare(b.title));
+  };
+
+  const filterCountries = (query: string): GroupedCountries[] => {
+    if (!query) return countries;
+
+    return countries.map(section => ({
+      title: section.title,
+      data: section.data.filter(country =>
+        country.name.common.toLowerCase().includes(query.toLowerCase())
+      ),
+    })).filter(section => section.data.length > 0);
+  };
+
+  const renderSectionHeader = ({ section }: { section: GroupedCountries }) => (
+    <View className={`px-4 py-2 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
+      <Text className={`text-lg font-bold ${isDark ? 'text-white' : 'text-black'}`}>
+        {section.title}
+      </Text>
+    </View>
   );
 
-  const renderCountryItem: ListRenderItem<Country> = ({ item }) => (
+  const renderItem = ({ item }: { item: Country }) => (
     <TouchableOpacity
-      className={`flex-row items-center p-4 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}
+      className={`flex-row items-center px-4 py-2 `}
       onPress={() => router.push({
         pathname: '/country/[id]',
         params: { id: item.cca3, country: JSON.stringify(item) }
@@ -60,7 +97,7 @@ export default function Home() {
       <View className="px-4 py-2">
         <View className="flex-row items-center justify-between">
           <Text className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-black'}`}>
-            &explore.
+            Explore <View className='w-1 h-1 rounded-full bg-[#FF6C00]'></View>
           </Text>
           <TouchableOpacity onPress={toggleColorScheme}>
             {isDark ? (
@@ -83,9 +120,10 @@ export default function Home() {
         </View>
       </View>
 
-      <FlatList
-        data={filteredCountries}
-        renderItem={renderCountryItem}
+      <SectionList
+        sections={filterCountries(searchQuery)}
+        renderItem={renderItem}
+        renderSectionHeader={renderSectionHeader}
         keyExtractor={item => item.cca3}
         className="flex-1"
       />
