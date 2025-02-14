@@ -14,6 +14,7 @@ export interface Country {
     languages?: {
       [key: string]: string;
     };
+    continents: string[],
     currencies?: {
       [key: string]: {
         name: string;

@@ -19,11 +19,11 @@ export default function CountryDetail() {
   const router = useRouter();
 
   const DetailItem: React.FC<DetailItemProps> = ({ label, value }) => (
-    <View className="mb-4">
-      <Text className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+    <View className="mb-1 flex-row gap-2">
+      <Text className={`text-base font-semibold ${isDark ? 'text-white' : 'text-black'}`}>
         {label}:
       </Text>
-      <Text className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-black'}`}>
+      <Text className={`text-base  ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
         {value || 'N/A'}
       </Text>
     </View>
@@ -54,10 +54,14 @@ export default function CountryDetail() {
           resizeMode="cover"
         />
 
-        <DetailItem label="Population" value={country.population.toLocaleString()} />
-        <DetailItem label="Region" value={country.region} />
-        <DetailItem label="Capital" value={country.capital?.[0]} />
-        <DetailItem label="Languages" value={Object.values(country.languages || {}).join(', ')} />
+        <View className='mb-3'>
+          <DetailItem label="Population" value={country.population.toLocaleString()} />
+          <DetailItem label="Region" value={country.region} />
+          <DetailItem label="Capital" value={country.capital?.[0]} />
+          <DetailItem label="Languages" value={Object.values(country.languages || {}).join(', ')} />
+          <DetailItem label="Motto" value={country.idd.root} />
+        </View>
+
         <DetailItem 
           label="Currency" 
           value={Object.values(country.currencies || {}).map(curr => curr.name).join(', ')} 
