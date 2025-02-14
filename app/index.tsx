@@ -26,7 +26,7 @@ export default function Home() {
 
   const fetchCountries = async () => {
     try {
-      const response = await fetch('https://restcountries.com/v3.1/all');
+      const response = await fetch('https://restcountries.com/v3.1/all',{headers: {"Accept-Encoding": "identity"}});
       const data: Country[] = await response.json();
       const sortedCountries = data.sort((a, b) => 
         a.name.common.localeCompare(b.name.common)
