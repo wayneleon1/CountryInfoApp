@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.wayneleon1.CountryInfoApp"
+      "package": "com.wayneleon1.CountryInfoApp",
+      "permissions": ["android.permission.ACCESS_NETWORK_STATE"]
     },
     "web": {
       "bundler": "metro",
