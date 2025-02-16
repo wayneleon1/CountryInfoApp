@@ -30,7 +30,9 @@ export default function RootLayout() {
   return (
     <>
     <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-    <Stack screenOptions={{ headerShown: false }} />
+    <Stack screenOptions={{ headerShown: false }} >
+      <Stack.Screen name='index'/>
+    </Stack>
   </>
   );
 }
